@@ -1,0 +1,36 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full viewport height */
+    width: 100vw;  /* Full viewport width */
+    margin: 0;     /* Remove default margin */
+    padding: 0;    /* Remove default padding */
+    box-sizing: border-box; /* Include padding and border in element's total width and height */
+}
+.bingo-card {
+    display: grid;
+    /* gap: 5px; */
+
+    /* grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); Adjust the size as needed */
+    /* grid-template-rows: repeat(auto-fill, minmax(100px, 1fr));    Adjust the size as needed */
+    width: 900vw;  /* Adjust the width as needed */
+    height: 100vh; /* Adjust the height as needed */
+}
+.bingo-cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: white;
+    border: 1px solid #141414;
+    font-weight: bold;
+    /* font-size: 20vw; */
+    /* font-size: 5dvw; */
+    box-sizing: border-box; /* Include padding and border in element's total width and height */
+
+}
+.bingo-cell-checked {
+    background-color: #ffeb3b;
+}
