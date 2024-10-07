@@ -23,11 +23,15 @@ twitch.onAuthorized((auth) => {
   token = auth.token; //JWT passed to backend for authentication 
   userId = auth.userId; //opaque userID 
 
+  resetBingoBoard();
+
+});
+
+function resetBingoBoard(){
   getBingoBoard().then(() => {
     makeBingoBoard();
   });
-
-});
+}
 
 function getBingoBoard(){
   return fetch(backend+"/bingo/api/bingo/get_bingo/", {
@@ -62,6 +66,29 @@ function makeBingoBoard(){
     cell.className = "bingo-cell";
     }
     cell.innerHTML = item['bingo_item']['name'];
+    cell.addEventListener("click", clickCell);
+
     board.appendChild(cell);
   }
+}
+
+function clickCell(){
+  var cell = this;
+  var cellIndex = Array.from(cell.parentNode.children).indexOf(cell);
+  var item = bingoBoard[cellIndex];
+  fetch(backend+"/bingo/api/bingo_item_user/check_item/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({token: token, bingo_item: item['bingo_item']['name']}),
+  })
+  .then(response => response.json())
+  .then((data) => {
+    bingoBoard = data["bingo_items"];
+    makeBingoBoard();
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+    });
 }
