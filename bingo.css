@@ -32,5 +32,8 @@ body {
 
 }
 .bingo-cell-checked {
+    background-color: #068f24;
+}
+.bingo-cell-waiting {
     background-color: #ffeb3b;
 }

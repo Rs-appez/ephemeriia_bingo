@@ -74,6 +74,7 @@ function makeBingoBoard(){
 
 function clickCell(){
   var cell = this;
+  cell.classList.add("bingo-cell-waiting");
   var cellIndex = Array.from(cell.parentNode.children).indexOf(cell);
   var item = bingoBoard[cellIndex];
   fetch(backend+"/bingo/api/bingo_item_user/check_item/", {
