@@ -1,3 +1,8 @@
+@font-face {
+    font-family: "Century";
+    src: url("/fonts/century.ttf") format("truetype");
+}
+
 body {
     font-family: Arial, sans-serif;
     display: flex;
@@ -30,6 +35,7 @@ body {
     border: 1px solid #fff;
     font-weight: bold;
     font-size: 3vw;
+    font-family: "Century";
 
     height: 21vh;
     width: 21vw;
