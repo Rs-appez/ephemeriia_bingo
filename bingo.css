@@ -15,16 +15,9 @@ body {
     /* Include padding and border in element's total width and height */
 }
 
-.bingo-card {
+.bingo-board {
     display: grid;
-    /* gap: 5px; */
-
-    grid-template-columns: repeat(auto-fill, 100%);
-    grid-template-rows: repeat(auto-fill, 100%);
-    /*width: 900vw;*/
-    /* Adjust the width as needed */
-    /*height: 100vh;*/
-    /* Adjust the height as needed */
+    grid-template-columns: repeat(4, 1fr);
 }
 
 .bingo-cell {
@@ -36,10 +29,11 @@ body {
     background-color: #ccbadb;
     border: 1px solid #141414;
     font-weight: bold;
-    font-size: 6vw;
-    /* font-size: 5dvw;  */
-    box-sizing: border-box;
-    /* Include padding and border in element's total width and height */
+    font-size: 3vw;
+
+    height: 21vh;
+    width: 21vw;
+    padding: 2vw;
 }
 
 .bingo-cell-checked {
