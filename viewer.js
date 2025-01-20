@@ -7,89 +7,86 @@ var bingoBoard = [];
 // so we don't have to write this out everytime #efficency
 const twitch = window.Twitch.ext;
 
-
-// callback called when context of an extension is fired 
+// callback called when context of an extension is fired
 twitch.onContext((context) => {
-  // console.log(context);
-  console.log("Context fired");
-  console.log("Test refresh");
-
+    // console.log(context);
+    console.log("Context fired");
+    console.log("Test refresh");
 });
-
 
 // onAuthorized callback called each time JWT is fired
 twitch.onAuthorized((auth) => {
-  // save our credentials
-  token = auth.token; //JWT passed to backend for authentication 
-  userId = auth.userId; //opaque userID 
+    // save our credentials
+    token = auth.token; //JWT passed to backend for authentication
+    userId = auth.userId; //opaque userID
 
-  resetBingoBoard();
-
+    resetBingoBoard();
 });
 
-function resetBingoBoard(){
-  getBingoBoard().then(() => {
-    makeBingoBoard();
-  });
-}
-
-function getBingoBoard(){
-  return fetch(backend+"/bingo/api/bingo/get_bingo/", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({token: token}),
-  })
-  .then(response => response.json())
-  .then(data => {
-    bingoBoard = data["bingo_items"];
-  })
-  .catch((error) => {
-    console.error('Error:', error);
+function resetBingoBoard() {
+    getBingoBoard().then(() => {
+        makeBingoBoard();
     });
 }
 
-function makeBingoBoard(){
-  var board = document.getElementById("bingo-board");
-  board.innerHTML = "";
-  length = Math.sqrt(bingoBoard.length);
-  board.style.gridTemplateColumns = "repeat("+length+", 1fr)";
-
-  for (var i = 0; i < bingoBoard.length; i++){
-    item = bingoBoard[i];
-    var cell = document.createElement("div");
-    if (item['is_checked']){
-      cell.className = "bingo-cell bingo-cell-checked";
+async function getBingoBoard() {
+    try {
+        const response = await fetch(backend + "/bingo/api/bingo/get_bingo/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ token: token }),
+        });
+        const data = await response.json();
+        bingoBoard = data["bingo_items"];
+    } catch (error) {
+        console.error("Error:", error);
     }
-    else{
-    cell.className = "bingo-cell";
-    }
-    cell.innerHTML = item['bingo_item']['name'];
-    cell.addEventListener("click", clickCell);
-
-    board.appendChild(cell);
-  }
 }
 
-function clickCell(){
-  var cell = this;
-  cell.classList.add("bingo-cell-waiting");
-  var cellIndex = Array.from(cell.parentNode.children).indexOf(cell);
-  var item = bingoBoard[cellIndex];
-  fetch(backend+"/bingo/api/bingo_item_user/check_item/", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({token: token, bingo_item: item['bingo_item']['name']}),
-  })
-  .then(response => response.json())
-  .then((data) => {
-    bingoBoard = data["bingo_items"];
-    makeBingoBoard();
-  })
-  .catch((error) => {
-    console.error('Error:', error);
-    });
+function makeBingoBoard() {
+    var board = document.getElementById("bingo-board");
+    board.innerHTML = "";
+    length = Math.sqrt(bingoBoard.length);
+    //board.style.gridTemplateColumns = "repeat("+length+", 1fr)";
+
+    for (var i = 0; i < bingoBoard.length; i++) {
+        item = bingoBoard[i];
+        var cell = document.createElement("div");
+        if (item["is_checked"]) {
+            cell.className = "bingo-cell bingo-cell-checked";
+        } else {
+            cell.className = "bingo-cell";
+        }
+        cell.innerHTML = item["bingo_item"]["name"];
+        cell.addEventListener("click", clickCell);
+
+        board.appendChild(cell);
+    }
+}
+
+function clickCell() {
+    var cell = this;
+    cell.classList.add("bingo-cell-waiting");
+    var cellIndex = Array.from(cell.parentNode.children).indexOf(cell);
+    var item = bingoBoard[cellIndex];
+    fetch(backend + "/bingo/api/bingo_item_user/check_item/", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            token: token,
+            bingo_item: item["bingo_item"]["name"],
+        }),
+    })
+        .then((response) => response.json())
+        .then((data) => {
+            bingoBoard = data["bingo_items"];
+            makeBingoBoard();
+        })
+        .catch((error) => {
+            console.error("Error:", error);
+        });
 }
