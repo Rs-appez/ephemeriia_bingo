@@ -10,8 +10,8 @@ const twitch = window.Twitch.ext;
 // callback called when context of an extension is fired
 twitch.onContext((context) => {
     // console.log(context);
-    console.log("Context fired");
-    console.log("Test refresh");
+    //console.log("Context fired");
+    //console.log("Test refresh");
 });
 
 // onAuthorized callback called each time JWT is fired
