@@ -1,6 +1,6 @@
 @font-face {
-    font-family: "Century";
-    src: url("/fonts/century.ttf") format("truetype");
+    font-family: "Sauce Barbe";
+    src: url("/fonts/Sauce\ Barbe.otf") format("truetype");
 }
 
 body {
@@ -35,7 +35,7 @@ body {
     border: 1px solid #fff;
     font-weight: bold;
     font-size: 3vw;
-    font-family: "Century";
+    font-family: "Sauce Barbe";
 
     height: 21vh;
     width: 21vw;
