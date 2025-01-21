@@ -50,3 +50,15 @@ body {
 .bingo-cell-waiting {
     background-color: #ffeb3b;
 }
+
+.overlay-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    /* Ensure the image does not interfere with interactions */
+    opacity: 0.1;
+    /* Adjust the transparency as needed */
+}

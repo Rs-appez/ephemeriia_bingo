@@ -1,8 +1,8 @@
-var token, userId;
+let token, userId;
 
 const backend = "http://127.0.0.1:8000";
 
-var bingoBoard = [];
+let bingoBoard = [];
 
 // so we don't have to write this out everytime #efficency
 const twitch = window.Twitch.ext;
@@ -46,14 +46,14 @@ async function getBingoBoard() {
 }
 
 function makeBingoBoard() {
-    var board = document.getElementById("bingo-board");
+    let board = document.getElementById("bingo-board");
     board.innerHTML = "";
     length = Math.sqrt(bingoBoard.length);
     //board.style.gridTemplateColumns = "repeat("+length+", 1fr)";
 
-    for (var i = 0; i < bingoBoard.length; i++) {
+    for (let i = 0; i < bingoBoard.length; i++) {
         item = bingoBoard[i];
-        var cell = document.createElement("div");
+        let cell = document.createElement("div");
         if (item["is_checked"]) {
             cell.className = "bingo-cell bingo-cell-checked";
         } else {
@@ -67,10 +67,10 @@ function makeBingoBoard() {
 }
 
 function clickCell() {
-    var cell = this;
+    let cell = this;
     cell.classList.add("bingo-cell-waiting");
-    var cellIndex = Array.from(cell.parentNode.children).indexOf(cell);
-    var item = bingoBoard[cellIndex];
+    let cellIndex = Array.from(cell.parentNode.children).indexOf(cell);
+    let item = bingoBoard[cellIndex];
     fetch(backend + "/bingo/api/bingo_item_user/check_item/", {
         method: "POST",
         headers: {
