@@ -8,11 +8,11 @@ let bingoBoard = [];
 const twitch = window.Twitch.ext;
 
 // callback called when context of an extension is fired
-//twitch.onContext((context) => {
-// console.log(context);
-//console.log("Context fired");
-//console.log("Test refresh");
-//});
+twitch.onContext((context) => {
+    if (!twitch.viewer.isLinked && twitch.viewer.isLinked !== null) {
+        twitch.actions.requestIdShare();
+    }
+});
 
 // onAuthorized callback called each time JWT is fired
 twitch.onAuthorized((auth) => {
@@ -20,8 +20,18 @@ twitch.onAuthorized((auth) => {
     token = auth.token; //JWT passed to backend for authentication
     userId = auth.userId; //opaque userID
 
-    resetBingoBoard();
+    if (twitch.viewer.isLinked) {
+        resetBingoBoard();
+    }
 });
+
+function doneLoading() {
+    loader = document.getElementById("loading");
+    loader.style.display = "none";
+
+    bingo = document.getElementById("bingo");
+    bingo.removeAttribute("hidden");
+}
 
 function resetBingoBoard() {
     getBingoBoard().then(() => {
@@ -64,6 +74,7 @@ function makeBingoBoard() {
 
         board.appendChild(cell);
     }
+    doneLoading();
 }
 
 function clickCell() {

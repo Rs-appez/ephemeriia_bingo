@@ -1,10 +1,11 @@
 @font-face {
     font-family: "Sauce Barbe";
-    src: url("/fonts/Sauce\ Barbe.otf") format("truetype");
+    src: url("Sauce-Barbe.ttf") format("truetype");
 }
 
 body {
-    font-family: Arial, sans-serif;
+    background-color: #ccbadb;
+    font-family: "Sauce Barbe";
     display: flex;
     justify-content: center;
     align-items: center;
@@ -31,11 +32,9 @@ body {
     align-items: center;
     text-align: center;
     color: #2c0022;
-    background-color: #ccbadb;
     border: 1px solid #fff;
     font-weight: bold;
     font-size: 3vw;
-    font-family: "Sauce Barbe";
 
     height: 21vh;
     width: 21vw;
@@ -59,4 +58,9 @@ body {
     height: 100%;
     pointer-events: none;
     opacity: 0.1;
+}
+
+.loading {
+    color: #2c0022;
+    font-size: 5vw;
 }
