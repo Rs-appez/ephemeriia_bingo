@@ -61,6 +61,14 @@ body {
 }
 
 .loading {
+    display: flex;
     color: #2c0022;
     font-size: 5vw;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.permission {
+    display: none;
 }
