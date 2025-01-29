@@ -17,8 +17,6 @@ twitch.onAuthorized((auth) => {
     userId = auth.userId; //opaque userID
 
     if (!twitch.viewer.isLinked && twitch.viewer.isLinked !== null) {
-        console.log(twitch.viewer.isLinked);
-
         permission = document.getElementById("permission");
         permission.style.display = "block";
         twitch.actions.requestIdShare();
@@ -33,6 +31,30 @@ function doneLoading() {
 
     bingo = document.getElementById("bingo");
     bingo.removeAttribute("hidden");
+}
+
+function loading() {
+    loader = document.getElementById("loading");
+    loader.style.display = "block";
+
+    bingo = document.getElementById("bingo");
+    bingo.setAttribute("hidden", true);
+
+    error = document.getElementById("error");
+    error.style.display = "none";
+}
+
+function errorPage() {
+    loader = document.getElementById("loading");
+    loader.style.display = "none";
+
+    error = document.getElementById("error");
+    error.style.display = "block";
+}
+
+function refresh() {
+    loading();
+    resetBingoBoard();
 }
 
 function resetBingoBoard() {
@@ -52,7 +74,12 @@ async function getBingoBoard() {
         });
         const data = await response.json();
         bingoBoard = data["bingo_items"];
+
+        if (response.status !== 200) {
+            errorPage();
+        }
     } catch (error) {
+        errorPage();
         console.error("Error:", error);
     }
 }
@@ -76,7 +103,12 @@ function makeBingoBoard() {
 
         board.appendChild(cell);
     }
-    doneLoading();
+    console.log("bingo : ", bingoBoard);
+    if (bingoBoard.length === 0) {
+        errorPage();
+    } else {
+        doneLoading();
+    }
 }
 
 function clickCell() {
@@ -100,6 +132,7 @@ function clickCell() {
             makeBingoBoard();
         })
         .catch((error) => {
+            errorPage();
             console.error("Error:", error);
         });
 }

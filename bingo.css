@@ -72,3 +72,44 @@ body {
 .permission {
     display: none;
 }
+
+.reverse {
+    transform: scaleX(-1);
+}
+
+.error {
+    display: none;
+}
+
+.error-message {
+    display: flex;
+    font-size: 5vw;
+    color: #2c0022;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+footer {
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+}
+
+footer p {
+    margin: 0;
+    font-size: 14px;
+    color: #6c757d;
+}
+
+footer a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
